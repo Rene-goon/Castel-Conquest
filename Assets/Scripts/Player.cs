@@ -28,5 +28,18 @@ public class Player : MonoBehaviour
 
         Vector2 playerVelocity = new Vector2(controlThrow * playerSpeed, body.velocity.y);
         body.velocity = playerVelocity;
+
+        // changes our sprite's direction
+        FlipSprite();
+    }
+
+    // flip sprite when velocity, t.f. direction, is negative
+    private void FlipSprite()
+    {
+        // checking if moving in general
+        bool isRunning = Mathf.Abs(body.velocity.x) > Mathf.Epsilon; // T or F value is bigger than smallest possible value (if F, not moving)
+        
+        if(isRunning)
+            transform.localScale = new Vector2(Mathf.Sign(body.velocity.x), 1f); // will affect our flip if velocity is in neg direction
     }
 }
