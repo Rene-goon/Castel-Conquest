@@ -8,11 +8,14 @@ public class Player : MonoBehaviour
     // allows us to change the value of this var in any script & in our editor
     [SerializeField] float playerSpeed = 10f;
     Rigidbody2D body;
+    Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
+        // getting references
         body = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -31,6 +34,15 @@ public class Player : MonoBehaviour
 
         // changes our sprite's direction
         FlipSprite();
+        RunningState();
+    }
+
+    private void RunningState()
+    {
+        bool isRunning = Mathf.Abs(body.velocity.x) > Mathf.Epsilon;
+
+        // updates animation if T or F
+        animator.SetBool("Running", isRunning);
     }
 
     // flip sprite when velocity, t.f. direction, is negative
