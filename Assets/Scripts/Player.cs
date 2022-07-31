@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] float jumpSpeed = 20f;
     Rigidbody2D body;
     Animator animator;
+    BoxCollider2D boxCollider;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
         // getting references
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        boxCollider = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -41,12 +43,14 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
+        if(!boxCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
+            return;
+        
         bool isJumping = CrossPlatformInputManager.GetButtonDown("Jump");
 
         if(isJumping)
         {
             Vector2 jumpVelocity = new Vector2(body.velocity.x, jumpSpeed);
-
             body.velocity = jumpVelocity;
         }
     }
