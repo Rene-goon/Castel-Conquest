@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     // allows us to change the value of this var in any script & in our editor
     [SerializeField] float playerSpeed = 10f;
+    [SerializeField] float jumpSpeed = 20f;
     Rigidbody2D body;
     Animator animator;
 
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         Run();
+        Jump();
     }
 
     private void Run()
@@ -35,6 +37,18 @@ public class Player : MonoBehaviour
         // changes our sprite's direction
         FlipSprite();
         RunningState();
+    }
+
+    private void Jump()
+    {
+        bool isJumping = CrossPlatformInputManager.GetButtonDown("Jump");
+
+        if(isJumping)
+        {
+            Vector2 jumpVelocity = new Vector2(body.velocity.x, jumpSpeed);
+
+            body.velocity = jumpVelocity;
+        }
     }
 
     private void RunningState()
