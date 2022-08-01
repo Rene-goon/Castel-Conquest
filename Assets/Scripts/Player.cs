@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class Player : MonoBehaviour
     // allows us to change the value of this var in any script & in our editor
     [SerializeField] float playerSpeed = 10f;
     [SerializeField] float jumpSpeed = 20f;
+    [SerializeField] float climbSpeed = 8f;
     Rigidbody2D body;
     Animator animator;
     BoxCollider2D boxCollider;
@@ -28,19 +30,25 @@ public class Player : MonoBehaviour
     {
         Run();
         Jump();
+        Climbing();
     }
 
-    private void Run()
+    private void Climbing()
     {
-        // contains Horizontal axis value changes
-        float controlThrow = CrossPlatformInputManager.GetAxis("Horizontal");
+        bool isClimbing = feet.IsTouchingLayers(LayerMask.GetMask("Climbing"));
+        float controlThrow = CrossPlatformInputManager.GetAxis("Vertical");
 
-        Vector2 playerVelocity = new Vector2(controlThrow * playerSpeed, body.velocity.y);
-        body.velocity = playerVelocity;
+        if(isClimbing)
+        {
+            Vector2 climbVelocity = new Vector2(body.velocity.x, controlThrow * climbSpeed);
+            body.velocity = climbVelocity;
+        }
 
-        // changes our sprite's direction
-        FlipSprite();
-        RunningState();
+        if(controlThrow > Mathf.Epsilon && isClimbing)
+            animator.SetBool("Climbing", true);
+        else
+            animator.SetBool("Climbing", false);
+
     }
 
     private void Jump()
@@ -54,6 +62,19 @@ public class Player : MonoBehaviour
             Vector2 jumpVelocity = new Vector2(body.velocity.x, jumpSpeed);
             body.velocity = jumpVelocity;
         }
+    }
+
+    private void Run()
+    {
+        // contains Horizontal axis value changes
+        float controlThrow = CrossPlatformInputManager.GetAxis("Horizontal");
+
+        Vector2 playerVelocity = new Vector2(controlThrow * playerSpeed, body.velocity.y);
+        body.velocity = playerVelocity;
+
+        // changes our sprite's direction
+        FlipSprite();
+        RunningState();
     }
 
     private void RunningState()
