@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     Rigidbody2D body;
     Animator animator;
     BoxCollider2D boxCollider;
+    PolygonCollider2D feet;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
+        feet = GetComponent<PolygonCollider2D>();
     }
 
     // Update is called once per frame
@@ -43,8 +45,7 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
-        if(!boxCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
-            return;
+        if(!feet.IsTouchingLayers(LayerMask.GetMask("Ground"))) {return;}
         
         bool isJumping = CrossPlatformInputManager.GetButtonDown("Jump");
 
