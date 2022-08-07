@@ -42,14 +42,11 @@ public class Player : MonoBehaviour
         bool isClimbing = body.IsTouchingLayers(LayerMask.GetMask("Climbing"));
         float controlThrow = CrossPlatformInputManager.GetAxis("Vertical");
 
-        if(isClimbing)
+        if(controlThrow > Mathf.Epsilon && isClimbing)
         {
             Vector2 climbVelocity = new Vector2(body.velocity.x, controlThrow * climbSpeed);
             body.velocity = climbVelocity;
-        }
 
-        if(controlThrow > Mathf.Epsilon && isClimbing)
-        {
             body.gravityScale = 0f;
             animator.SetBool("Climbing", true);
         }
