@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     Animator animator;
     BoxCollider2D boxCollider;
     PolygonCollider2D feet;
+    public float lowJumpMultiplier = 2f;
 
     float startingGravity;
 
@@ -69,6 +70,7 @@ public class Player : MonoBehaviour
             Vector2 jumpVelocity = new Vector2(body.velocity.x, jumpSpeed);
             body.velocity = jumpVelocity;
         }
+        
     }
 
     private void Run()
