@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1174635835}
   - component: {fileID: 1174635836}
   - component: {fileID: 2069839470}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1149401589
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -1725110037, guid: 9393376f6cd9e1e47a1d0295fdb01f38, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -128,7 +128,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: 3c194d3b5d6a4724ca45c50a72e90ecc, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &1174635835
 BoxCollider2D:
@@ -143,7 +143,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.04968816, y: -0.06589782}
+  m_Offset: {x: -0.04968816, y: -0.06496215}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -154,7 +154,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.2384464, y: 0.87373424}
+  m_Size: {x: 1.2384464, y: 0.8718629}
   m_EdgeRadius: 0
 --- !u!114 &1174635836
 MonoBehaviour:
@@ -170,6 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpeed: 10
   jumpSpeed: 20
+  climbSpeed: 10
 --- !u!60 &2069839470
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -197,5 +198,5 @@ PolygonCollider2D:
     m_Paths:
     - - {x: 0.32178962, y: -0.34997883}
       - {x: -0.1680572, y: -0.35813847}
-      - {x: -0.16121149, y: -0.50722134}
-      - {x: 0.32535177, y: -0.5079995}
+      - {x: -0.16830349, y: -0.5043262}
+      - {x: 0.33791715, y: -0.5041374}
