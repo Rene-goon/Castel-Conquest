@@ -70,7 +70,10 @@ public class Player : MonoBehaviour
             Vector2 jumpVelocity = new Vector2(body.velocity.x, jumpSpeed);
             body.velocity = jumpVelocity;
         }
-        
+        else if(body.velocity.y > 0 && !Input.GetButton("Jump"))
+        {
+            body.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier -1) * Time.deltaTime;
+        }
     }
 
     private void Run()
