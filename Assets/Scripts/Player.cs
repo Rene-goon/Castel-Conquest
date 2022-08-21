@@ -8,15 +8,20 @@ public class Player : MonoBehaviour
 {
     // allows us to change the value of this var in any script & in our editor
     [SerializeField] float playerSpeed = 10f;
-    [SerializeField] float jumpSpeed = 20f;
-    [SerializeField] float climbSpeed = 8f;
+    [SerializeField] float jumpSpeed = 23f;
+    [SerializeField] float climbSpeed = 10f;
     Rigidbody2D body;
     Animator animator;
     BoxCollider2D boxCollider;
     PolygonCollider2D feet;
-    public float lowJumpMultiplier = 2f;
 
     float startingGravity;
+
+    private float coyoteTime = 0.2f; // the longer the time, the longer the player can jump after
+    private float coyoteTimeCounter;
+
+    private float jumpBufferTime = 0.2f;
+    private float jumpBufferCounter;
 
     // Start is called before the first frame update
     void Start()
@@ -59,18 +64,39 @@ public class Player : MonoBehaviour
 
     }
 
-    private void Jump()
+    private bool IsGrounded()
     {
-        if(!feet.IsTouchingLayers(LayerMask.GetMask("Ground"))) {return;}
-        
-        bool isJumping = CrossPlatformInputManager.GetButtonDown("Jump");
+        return feet.IsTouchingLayers(LayerMask.GetMask("Ground"));
+    }
 
-        if(isJumping)
+    private void Jump()
+    {   
+        bool jumpButtonDown = CrossPlatformInputManager.GetButtonDown("Jump");
+        bool jumoButtonUp = CrossPlatformInputManager.GetButtonUp("Jump");
+
+        if(IsGrounded())
+            coyoteTimeCounter = coyoteTime;
+        else
+            coyoteTimeCounter -= Time.deltaTime;
+
+        if(jumpButtonDown)
+            jumpBufferCounter = jumpBufferTime;
+        else
+            jumpBufferCounter -= Time.deltaTime;
+
+        if(coyoteTimeCounter > 0f && jumpBufferCounter > 0f)
         {
-            Vector2 jumpVelocity = new Vector2(body.velocity.x, jumpSpeed);
-            body.velocity = jumpVelocity;
+            body.velocity = new Vector2(body.velocity.x, jumpSpeed);
+
+            jumpBufferCounter = 0f;
         }
-        
+
+        if(jumoButtonUp && body.velocity.y > 0f)
+        {
+            body.velocity = new Vector2(body.velocity.x, body.velocity.y * 0.5f);
+
+            coyoteTimeCounter = 0f;
+        }
     }
 
     private void Run()
