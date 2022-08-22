@@ -76,7 +76,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1149401589
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -1725110037, guid: 9393376f6cd9e1e47a1d0295fdb01f38, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -143,7 +143,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.04968816, y: -0.06496215}
+  m_Offset: {x: 0.1266793, y: -0.06496215}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -154,7 +154,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.2384464, y: 0.8718629}
+  m_Size: {x: 0.88571143, y: 0.8718629}
   m_EdgeRadius: 0
 --- !u!114 &1174635836
 MonoBehaviour:
@@ -169,8 +169,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 10
-  jumpSpeed: 20
+  jumpSpeed: 23
   climbSpeed: 10
+  hitKick: {x: 20, y: 20}
 --- !u!60 &2069839470
 PolygonCollider2D:
   m_ObjectHideFlags: 0

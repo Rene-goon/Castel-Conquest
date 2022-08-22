@@ -10,18 +10,19 @@ public class Player : MonoBehaviour
     [SerializeField] float playerSpeed = 10f;
     [SerializeField] float jumpSpeed = 23f;
     [SerializeField] float climbSpeed = 10f;
+    [SerializeField] Vector2 hitKick = new Vector2(25f, 25f);
+
     Rigidbody2D body;
     Animator animator;
     BoxCollider2D boxCollider;
     PolygonCollider2D feet;
 
     float startingGravity;
-
     private float coyoteTime = 0.2f; // the longer the time, the longer the player can jump after
     private float coyoteTimeCounter;
-
     private float jumpBufferTime = 0.2f;
     private float jumpBufferCounter;
+    bool isHurt = false;
 
     // Start is called before the first frame update
     void Start()
@@ -38,9 +39,32 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Run();
-        Jump();
-        Climbing();
+        if(isHurt) {return;}
+        //{
+            Run();
+            Jump();
+            Climbing();
+
+            if(boxCollider.IsTouchingLayers(LayerMask.GetMask("Enemy")))
+                Hit();
+        //}
+    }
+
+    private void Hit()
+    {
+        body.velocity = hitKick * new Vector2(-transform.localScale.x, 1f);
+
+        animator.SetTrigger("Hit");
+        isHurt = true;
+        
+        StartCoroutine(StopHurting());
+    }
+
+    IEnumerator StopHurting()
+    {
+        yield return new WaitForSeconds(2f);
+
+        isHurt = false;
     }
 
     private void Climbing()
@@ -72,7 +96,7 @@ public class Player : MonoBehaviour
     private void Jump()
     {   
         bool jumpButtonDown = CrossPlatformInputManager.GetButtonDown("Jump");
-        bool jumoButtonUp = CrossPlatformInputManager.GetButtonUp("Jump");
+        bool jumpButtonUp = CrossPlatformInputManager.GetButtonUp("Jump");
 
         if(IsGrounded())
             coyoteTimeCounter = coyoteTime;
@@ -91,7 +115,7 @@ public class Player : MonoBehaviour
             jumpBufferCounter = 0f;
         }
 
-        if(jumoButtonUp && body.velocity.y > 0f)
+        if(jumpButtonUp && body.velocity.y > 0f)
         {
             body.velocity = new Vector2(body.velocity.x, body.velocity.y * 0.5f);
 
